@@ -1,0 +1,56 @@
+# Agent Manager Configuration
+# Compatible: Copilot & Codex (read via filesystem, no runtime dependency)
+
+manager:
+  name: agent-manager
+  version: "1.0.0"
+  description: "Super Manager — Điều phối viên tổng cho hệ thống multi-agent"
+
+# Đường dẫn gốc chứa tất cả agent (relative to agent-manager/)
+agents_root: "../"
+
+# Auto-Discovery Settings
+discovery:
+  # File nhận diện agent (theo thứ tự ưu tiên)
+  identity_files:
+    - "AGENT.md"
+    - "instructions.md"
+    - "requirement.md"
+    - "README.md"
+    - "agent_config.yaml"
+  # Pattern tìm skill
+  skill_pattern: "skills/**/SKILL.md"
+  # Thư mục bỏ qua khi scan
+  exclude_dirs:
+    - "agent-manager"
+    - ".git"
+    - "node_modules"
+    - "__pycache__"
+
+# Chính sách điều phối
+orchestration:
+  # Số agent tối đa chạy song song
+  max_parallel_agents: 4
+  # Chiến lược mặc định
+  default_strategy: "auto"  # auto | parallel | sequential | hybrid
+  # Timeout cho mỗi sub-task (phút)
+  subtask_timeout_minutes: 30
+
+# Chính sách chất lượng
+quality:
+  # Tự động review output trước khi giao user
+  auto_review: true
+  # Yêu cầu xác nhận user trước hành động phá huỷ
+  confirm_destructive: true
+  # Ghi log mọi hành động
+  logging: true
+  log_file: "workspace/execution-log.md"
+
+# Thư mục làm việc
+paths:
+  input: "input/"
+  output: "output/"
+  workspace: "workspace/"
+  templates: "templates/"
+  skills: "skills/"
+  workflows: ".agent/workflows/"
